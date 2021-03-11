@@ -30,8 +30,6 @@ public class arayuz {
     private JTextField yazdır1;
     private JButton tamamButon;
     private String isim1, isim2;
-    public boolean tiklandiMiOyuncu = false;
-    public boolean tiklandiMiBilgisayar = false;
 
     public arayuz() {
         giriş = new JFrame("girişarayüzü");
@@ -63,9 +61,8 @@ public class arayuz {
 
                     public void actionPerformed(ActionEvent e) {
                         isim1 = yazdır.getText();
-                        isim2 = yazdır1.getText();
-                        tiklandiMiOyuncu = true;
-                        // System.out.println(isim1+"  "+isim2);
+                        isim2 =yazdır1.getText();
+                       // System.out.println(isim1+"  "+isim2);
                     }
                 });
 
@@ -111,7 +108,6 @@ public class arayuz {
                         isim1 = yazdır.getText();
 
                         System.out.println(isim1);
-                        tiklandiMiBilgisayar = true;
                     }
                 });
 

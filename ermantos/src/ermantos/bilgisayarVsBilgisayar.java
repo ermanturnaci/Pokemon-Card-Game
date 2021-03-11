@@ -19,10 +19,10 @@ import javax.swing.JLabel;
  *
  * @author PC
  */
-public class bilgisayarVsOyuncu {
+public class bilgisayarVsBilgisayar {
 
     Random r = new Random();
-    Kullanıcı kullanıcı = new Kullanıcı();
+    bilgisayar bilgisayarnesne2 = new bilgisayar();
     bilgisayar bilgisayarnesne = new bilgisayar();
     JFrame anaFrame = new JFrame("Pokemon Oyunu");
     int[][] mevki1 = {{400, 60, 120, 150}, {620, 60, 120, 150}, {840, 60, 120, 150}};
@@ -30,11 +30,11 @@ public class bilgisayarVsOyuncu {
     int[] ortaMevki1 = {520, 270, 120, 150};
     int[] ortaMevki2 = {740, 270, 120, 150};
     private ArrayList<Pokemon> deste = new ArrayList<>();
-    private ArrayList<Pokemon> oyuncu = new ArrayList<>();
+    private ArrayList<Pokemon> bilgisayar2 = new ArrayList<>();
     private ArrayList<Pokemon> bilgisayar = new ArrayList<>();
 
     JLabel pcSkor = new JLabel("Skor:");
-    JLabel oyuncuSkor = new JLabel("Skor:");
+    JLabel pcSkor2 = new JLabel("Skor:");
     Pikachu pikachu = new Pikachu();
     Psyduck psyduck = new Psyduck();
     Snorlax snorlax = new Snorlax();
@@ -46,28 +46,28 @@ public class bilgisayarVsOyuncu {
     Jigglypuff jigglypuff = new Jigglypuff();
     Meowth meowth = new Meowth();
 
-    public bilgisayarVsOyuncu() {
+    public bilgisayarVsBilgisayar() {
 
         //anaFrame.setSize(1366,768);
         JLabel pcFoto = new JLabel();
-        JLabel oyuncuFoto = new JLabel();
+        JLabel pcFoto2 = new JLabel();
         JLabel pcAd = new JLabel("Bilgisayar");
-        JLabel oyuncuAd = new JLabel("Oyuncu");
+        JLabel pcAd2 = new JLabel("Bilgisayar2");
 
         pcFoto.setBounds(20, 60, 232, 217);
-        oyuncuFoto.setBounds(1100, 400, 232, 217);
+        pcFoto2.setBounds(1100, 400, 232, 217);
         pcAd.setBounds(100, 250, 100, 100);
-        oyuncuAd.setBounds(1200, 520, 232, 217);
+        pcAd2.setBounds(1200, 520, 232, 217);
         pcSkor.setBounds(100, 220, 232, 217);
-        oyuncuSkor.setBounds(1200, 550, 232, 217);
+        pcSkor2.setBounds(1200, 550, 232, 217);
         pcFoto.setIcon(new ImageIcon(this.getClass().getResource("pc.jpg")));
-        oyuncuFoto.setIcon(new ImageIcon(this.getClass().getResource("ash.jpg")));
+        pcFoto2.setIcon(new ImageIcon(this.getClass().getResource("pc.jpg")));
         anaFrame.add(pcFoto);
-        anaFrame.add(oyuncuFoto);
+        anaFrame.add(pcFoto2);
         anaFrame.add(pcAd);
-        anaFrame.add(oyuncuAd);
+        anaFrame.add(pcAd2);
         anaFrame.add(pcSkor);
-        anaFrame.add(oyuncuSkor);
+        anaFrame.add(pcSkor2);
 
         anaFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         anaFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -92,7 +92,7 @@ public class bilgisayarVsOyuncu {
         int esik = 10, index;
         for (int i = 0; i < 3; i++) { // oyuncuya kartları dağıtıyor.
             index = r.nextInt(esik);
-            oyuncu.add(deste.get(index));
+            bilgisayar2.add(deste.get(index));
 
             deste.remove(index);
             esik--;
@@ -113,51 +113,54 @@ public class bilgisayarVsOyuncu {
 
         for (int i = 0; i < 3; i++) {
 
-            oyuncu.get(i).butonAta("", mevki2[i][0], mevki2[i][1], mevki2[i][2], mevki2[i][3]);
+            bilgisayar2.get(i).butonAta("", mevki2[i][0], mevki2[i][1], mevki2[i][2], mevki2[i][3]);
             bilgisayar.get(i).butonAta("", mevki1[i][0], mevki1[i][1], mevki1[i][2], mevki1[i][3]);
-            oyuncu.get(i).ekle(anaFrame);
+            bilgisayar2.get(i).ekle(anaFrame);
             bilgisayar.get(i).ekle(anaFrame);
         }
-        int döndür = -1;
+        int index=-1;
         for (int i = 0; i < 5; i++) {
-            while (döndür == -1) {
-                döndür = kullanıcı.kartSec(oyuncu);
-            }
+            
+            if(deste.size()!=0)
+            index=bilgisayarnesne2.kartSec(deste);
+            
+            System.out.println(index);
 
-            oyuncu.get(döndür).cikar(anaFrame);
-            oyuncu.get(döndür).butonAta("", ortaMevki1[0], ortaMevki1[1], ortaMevki1[2], ortaMevki1[3]);
-            oyuncu.get(döndür).ekle(anaFrame);
+            bilgisayar2.get(index).cikar(anaFrame);
+            bilgisayar2.get(index).butonAta("", ortaMevki1[0], ortaMevki1[1], ortaMevki1[2], ortaMevki1[3]);
+            bilgisayar2.get(index).ekle(anaFrame);
+            Thread.sleep(1500);
 
-            int a = bilgisayarnesne.kartSec(oyuncu);
+            int a = bilgisayarnesne.kartSec(bilgisayar);
             bilgisayar.get(a).butonAta("", ortaMevki2[0], ortaMevki2[1], ortaMevki2[2], ortaMevki2[3]);
             bilgisayar.get(a).ekle(anaFrame);
 
-            if (oyuncu.get(döndür).getHasarPuanı() < bilgisayar.get(a).getHasarPuanı()) {
+            if (bilgisayar2.get(index).getHasarPuanı() < bilgisayar.get(a).getHasarPuanı()) {
                 bilgisayarnesne.setskor(bilgisayarnesne.getskor() + 5);
 
-            } else if (oyuncu.get(döndür).getHasarPuanı() > bilgisayar.get(a).getHasarPuanı()) {
-                System.out.println(oyuncu.get(döndür).getHasarPuanı());
+            } else if (bilgisayar2.get(index).getHasarPuanı() > bilgisayar.get(a).getHasarPuanı()) {
+                System.out.println(bilgisayar2.get(index).getHasarPuanı());
 
-                kullanıcı.setskor(kullanıcı.getskor() + 5);
+                bilgisayarnesne2.setskor(bilgisayarnesne2.getskor() + 5);
             } else {
-                kullanıcı.setskor(kullanıcı.getskor());
+                bilgisayarnesne2.setskor(bilgisayarnesne2.getskor());
                 bilgisayarnesne.setskor(bilgisayarnesne.getskor());
             }
             pcSkor.setText("Skor: " + bilgisayarnesne.getskor());
-            oyuncuSkor.setText("Skor: " + kullanıcı.getskor());
-            Thread.sleep(2000);
+            pcSkor2.setText("Skor: " + bilgisayarnesne2.getskor());
+            Thread.sleep(1500);
 
             bilgisayar.get(a).cikar(anaFrame);
-            oyuncu.get(döndür).cikar(anaFrame);
-            oyuncu.remove(döndür);
+            bilgisayar2.get(index).cikar(anaFrame);
+            bilgisayar2.remove(index);
             bilgisayar.remove(a);
 
             if (deste.size() > 0) {
                 int yeni = r.nextInt(deste.size());
-                oyuncu.add(döndür, deste.get(yeni));
+                bilgisayar2.add(index, deste.get(yeni));
                 deste.remove(yeni);
-                oyuncu.get(döndür).butonAta("", mevki2[döndür][0], mevki2[döndür][1], mevki2[döndür][2], mevki2[döndür][3]);
-                oyuncu.get(döndür).ekle(anaFrame);
+                bilgisayar2.get(index).butonAta("", mevki2[index][0], mevki2[index][1], mevki2[index][2], mevki2[index][3]);
+                bilgisayar2.get(index).ekle(anaFrame);
                 yeni = r.nextInt(deste.size());
                 bilgisayar.add(a, deste.get(yeni));
                 deste.remove(yeni);
@@ -166,18 +169,13 @@ public class bilgisayarVsOyuncu {
 
             }
 
-            döndür = -1;
+            Thread.sleep(1000);
 
         }
         String kazananOyuncu=" ";
-        if (kullanıcı.getskor() > bilgisayarnesne.getskor()) {
-            kazananOyuncu = "Oyuncu";
-        }else if ( kullanıcı.getskor() == bilgisayarnesne.getskor())
-        {
-            kazananOyuncu="Berabere";
-        } 
-        
-        else {
+        if (bilgisayarnesne2.getskor() > bilgisayarnesne.getskor()) {
+            kazananOyuncu = "Bilgisayar2";
+        } else {
             kazananOyuncu = "Bilgisayar";
         }
 
@@ -188,6 +186,7 @@ public class bilgisayarVsOyuncu {
         kazananJLabel.setBounds(20, 20, 200, 30);
         kazanan.add(kazananJLabel,BorderLayout.CENTER);
         kazanan.setSize(200, 200);
+        kazanan.setLocationRelativeTo(null);
         kazanan.setLayout(null);
         kazanan.setVisible(true);
         
